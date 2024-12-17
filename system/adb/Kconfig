@@ -116,16 +116,15 @@ config ADBD_USB_SERVER
 choice
 	prompt "Check usb hotplug"
 	default ADBD_USB_HOTPLUG_BYTIMER
+	depends on ADBD_USB_SERVER
 
 config ADBD_USB_HOTPLUG_BYTIMER
 	bool "Using 1s timer to check usb hotplug"
-	depends on ADBD_USB_SERVER
 	---help---
 		Using 1s timer to check usb hotplug
 
 config ADBD_USB_HOTPLUG_BYNOTIFY
 	bool "Using fs notify to check usb hotplug"
-	depends on ADBD_USB_SERVER
 	depends on FS_NOTIFY
 	---help---
 		Using fs notify to monitor usb hotplug
