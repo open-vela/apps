@@ -603,5 +603,8 @@ int main(int argc, FAR char *argv[])
     }
 
 #endif
+  lv_nuttx_deinit(&result);
+  lv_deinit();
+
   return EXIT_SUCCESS;
 }
