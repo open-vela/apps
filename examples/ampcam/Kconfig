@@ -1,0 +1,31 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_AMPCAM
+	tristate "AMP shared-memory camera viewer"
+	default n
+	---help---
+		Read frames that the Linux side captured and published in the AMP
+		shared carveout, and either draw them to the framebuffer or just
+		report what the transport is doing.
+
+		Needs a board that provides /dev/amcam0 - currently the RK3588
+		EVB7 AMP configuration.
+
+if EXAMPLES_AMPCAM
+
+config EXAMPLES_AMPCAM_PROGNAME
+	string "Program name"
+	default "ampcam"
+
+config EXAMPLES_AMPCAM_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_AMPCAM_STACKSIZE
+	int "Stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
