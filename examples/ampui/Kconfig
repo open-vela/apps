@@ -1,0 +1,42 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_AMPUI
+	tristate "AMP camera UI (LVGL home screen + camera view)"
+	default n
+	depends on GRAPHICS_LVGL && LV_USE_NUTTX && LV_USE_CANVAS
+	---help---
+		A home screen with a camera icon and a button, and a camera screen
+		showing the frames the Linux side publishes in the AMP shared
+		carveout with the detections drawn over them. The camera screen has
+		a back button.
+
+		Replaces the ampcam viewer rather than complementing it: ampcam
+		writes /dev/fb0 directly while LVGL renders into the same buffers,
+		with no ownership protocol between them, so only one of the two can
+		run at a time.
+
+		Needs a board that provides /dev/amcam0 and /dev/fb0 - currently the
+		RK3588 EVB7 AMP configuration.
+
+if EXAMPLES_AMPUI
+
+config EXAMPLES_AMPUI_PROGNAME
+	string "Program name"
+	default "ampui"
+
+config EXAMPLES_AMPUI_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_AMPUI_STACKSIZE
+	int "Stack size"
+	default 16384
+	---help---
+		Larger than the default task stack because LVGL's rendering runs on
+		this task. The detection set is kept off the stack deliberately, but
+		the toolkit's own draw path is not this application's to size.
+
+endif
